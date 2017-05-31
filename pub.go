@@ -8,13 +8,16 @@ type Marshaler interface {
 	Marshal() ([]byte, error)
 }
 
-func NewEvent(eventType string, data Marshaler) []byte {
-	bdata, _ := data.Marshal()
+func NewEvent(eventType string, data Marshaler) ([]byte, error) {
+	bdata, err := data.Marshal()
+	if err != nil {
+		return nil, err
+	}
+
 	epb := &pb.Event{
 		Type: eventType,
 		Data: bdata,
 	}
 
-	bepb, _ := epb.Marshal()
-	return bepb
+	return epb.Marshal()
 }
