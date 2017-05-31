@@ -12,7 +12,8 @@ go get github.com/plimble/natses
 ```go
 // Pub
 sc, _ := stan.Connect(clusterID, clientID)
-sc.Publish("foo", natses.NewEvent("user", data))
+sc.Publish("foo", natses.NewEvent("Registered", registeredEvent))
+sc.Publish("foo", natses.NewEvent("EmailUpdated", emailUpdatedEvent))
 ```
 
 ```go
