@@ -7,7 +7,7 @@ Event Sourcing with NATS Streaming
 go get github.com/plimble/natses
 ```
 
-### Useage
+### Usage
 
 ```go
 // Pub
