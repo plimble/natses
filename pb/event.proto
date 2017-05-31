@@ -3,5 +3,5 @@ package pb;
 
 message Event {
   string type = 1;
-	bytes data = 2;
+  bytes data = 2;
 }
