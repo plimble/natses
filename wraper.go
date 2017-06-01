@@ -5,7 +5,7 @@ import (
 	"github.com/nats-io/go-nats-streaming"
 )
 
-type NatsConn interface {
+type Conn interface {
 	// Publish
 	Publish(subject, eventType string, data Marshaler) error
 	PublishAsync(subject, eventType string, data Marshaler, ah stan.AckHandler) (string, error)
