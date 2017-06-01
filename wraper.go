@@ -29,7 +29,7 @@ type ESNats struct {
 	conn stan.Conn
 }
 
-func New(conn stan.Conn) NatsConn {
+func New(conn stan.Conn) Conn {
 	return &ESNats{conn}
 }
 
