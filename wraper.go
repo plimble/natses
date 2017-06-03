@@ -5,6 +5,7 @@ import (
 	"github.com/nats-io/go-nats-streaming"
 )
 
+//go:generate mockery -name Conn
 type Conn interface {
 	// Publish
 	Publish(subject, eventType string, data Marshaler) error
