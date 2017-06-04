@@ -10,6 +10,7 @@ type EventMsg struct {
 	*stan.Msg
 	EventType string
 	Data      []byte
+	Timestamp int64
 }
 
 type MsgHandler func(msg *EventMsg)
@@ -23,6 +24,7 @@ func SubEvent(h MsgHandler) stan.MsgHandler {
 			Msg:       msg,
 			EventType: pbe.Type,
 			Data:      pbe.Data,
+			Timestamp: msg.Timestamp,
 		})
 	}
 }
