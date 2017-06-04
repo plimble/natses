@@ -1,6 +1,7 @@
 package natses
 
 import (
+	"github.com/golang/protobuf/proto"
 	"github.com/nats-io/go-nats-streaming"
 	"github.com/plimble/natses/pb"
 )
@@ -16,7 +17,7 @@ type MsgHandler func(msg *EventMsg)
 func SubEvent(h MsgHandler) stan.MsgHandler {
 	return func(msg *stan.Msg) {
 		pbe := &pb.Event{}
-		pbe.Unmarshal(msg.Data)
+		proto.Unmarshal(msg.Data, pbe)
 
 		h(&EventMsg{
 			Msg:       msg,
