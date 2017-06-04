@@ -5,10 +5,6 @@ import (
 	"github.com/plimble/natses/pb"
 )
 
-type Marshaler interface {
-	Marshal() ([]byte, error)
-}
-
 func NewEvent(eventType string, data proto.Message) ([]byte, error) {
 	bdata, err := proto.Marshal(data)
 	if err != nil {
@@ -20,5 +16,5 @@ func NewEvent(eventType string, data proto.Message) ([]byte, error) {
 		Data: bdata,
 	}
 
-	return epb.Marshal()
+	return proto.Marshal(epb)
 }
