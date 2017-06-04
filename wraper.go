@@ -1,6 +1,7 @@
 package natses
 
 import (
+	"github.com/golang/protobuf/proto"
 	nats "github.com/nats-io/go-nats"
 	"github.com/nats-io/go-nats-streaming"
 )
@@ -8,8 +9,8 @@ import (
 //go:generate mockery -name Conn
 type Conn interface {
 	// Publish
-	Publish(subject, eventType string, data Marshaler) error
-	PublishAsync(subject, eventType string, data Marshaler, ah stan.AckHandler) (string, error)
+	Publish(subject, eventType string, data proto.Message) error
+	PublishAsync(subject, eventType string, data proto.Message, ah stan.AckHandler) (string, error)
 
 	// Subscribe
 	Subscribe(subject string, cb MsgHandler, opts ...stan.SubscriptionOption) (stan.Subscription, error)
@@ -34,7 +35,7 @@ func New(conn stan.Conn) Conn {
 	return &ESNats{conn}
 }
 
-func (n *ESNats) Publish(subject, eventType string, data Marshaler) error {
+func (n *ESNats) Publish(subject, eventType string, data proto.Message) error {
 	edata, err := NewEvent(eventType, data)
 	if err != nil {
 		return err
@@ -43,7 +44,7 @@ func (n *ESNats) Publish(subject, eventType string, data Marshaler) error {
 	return n.conn.Publish(subject, edata)
 }
 
-func (n *ESNats) PublishAsync(subject, eventType string, data Marshaler, ah stan.AckHandler) (string, error) {
+func (n *ESNats) PublishAsync(subject, eventType string, data proto.Message, ah stan.AckHandler) (string, error) {
 	edata, err := NewEvent(eventType, data)
 	if err != nil {
 		return "", err
